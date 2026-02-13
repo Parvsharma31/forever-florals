@@ -1,9 +1,9 @@
 import React from 'react'
 
 const chefs = [
-  { id: '1', name: 'Aiko Tanaka', bio: 'Ramen specialist and broth master.', image: 'https://images.unsplash.com/photo-1581299894007-aaa50297cf16?auto=format&fit=crop&w=400&q=80' },
-  { id: '2', name: 'Marco Ricci', bio: 'Traditional Italian techniques with modern twists.', image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=400&q=80' },
-  { id: '3', name: 'Lena Martinez', bio: 'Creative brunch and pastry chef.', image: 'https://images.unsplash.com/photo-1583394238232-9636231d3604?auto=format&fit=crop&w=400&q=80' }
+  { id: '1', name: 'Aiko Tanaka', bio: 'Ramen specialist and broth master.', image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400' },
+  { id: '2', name: 'Marco Ricci', bio: 'Traditional Italian techniques with modern twists.', image: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=400' },
+  { id: '3', name: 'Lena Martinez', bio: 'Creative brunch and pastry chef.', image: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400' }
 ]
 
 export default function FamousChefs() {

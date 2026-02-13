@@ -1,10 +1,12 @@
 import React from 'react'
 
 const cuisines = [
-  { id: 'it', name: 'Italian', desc: 'Pasta, risotto, and southern comfort.', image: 'https://images.unsplash.com/photo-1498579150354-977475b7ea0b?auto=format&fit=crop&w=800&q=80' },
-  { id: 'cn', name: 'Chinese', desc: 'Wok, noodles, and bold flavors.', image: 'https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80' },
-  { id: 'mx', name: 'Mexican', desc: 'Bright, spicy, and bold dishes.', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80' },
-  { id: 'in', name: 'Indian', desc: 'Rich spices and aromatic curries.', image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80' }
+  { id: 'it', name: 'Italian', desc: 'Pasta, risotto, and southern comfort.', image: 'https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { id: 'cn', name: 'Chinese', desc: 'Wok, noodles, and bold flavors.', image: 'https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { id: 'mx', name: 'Mexican', desc: 'Bright, spicy, and bold dishes.', image: 'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { id: 'in', name: 'Indian', desc: 'Rich spices and aromatic curries.', image: 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { id: 'fr', name: 'French', desc: 'Elegant classics and refined techniques.', image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { id: 'th', name: 'Thai', desc: 'Sweet, sour, salty, and spicy harmony.', image: 'https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=800' }
 ]
 
 export default function Cuisines() {

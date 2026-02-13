@@ -4,6 +4,8 @@ import Cuisines from './pages/Cuisines'
 import FamousChefs from './pages/FamousChefs'
 import AboutUs from './pages/AboutUs'
 import LoginModal from './components/LoginModal'
+import BackToTop from './components/BackToTop'
+import { initScrollAnimations, cleanupScrollAnimations } from './utils/scrollAnimations'
 
 export default function App() {
   const [active, setActive] = useState('home')
@@ -11,6 +13,35 @@ export default function App() {
     try { return JSON.parse(localStorage.getItem('vibe_user')) } catch { return null }
   })
   const [loginOpen, setLoginOpen] = useState(false)
+
+  // Theme state - check localStorage first, then system preference
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) return savedTheme
+
+    // Check system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    }
+    return 'light'
+  })
+
+  // Apply theme to document
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  // Toggle theme function
+  function toggleTheme() {
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light')
+  }
+
+  // Initialize scroll animations
+  useEffect(() => {
+    const observer = initScrollAnimations()
+    return () => cleanupScrollAnimations(observer)
+  }, [])
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll('section[id]'))
@@ -53,6 +84,14 @@ export default function App() {
             <a href="#cuisines" className={active === 'cuisines' ? 'active' : ''}>Cuisines</a>
             <a href="#chefs" className={active === 'chefs' ? 'active' : ''}>Famous Chefs</a>
             <a href="#about" className={active === 'about' ? 'active' : ''}>About Us</a>
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
             {user ? (
               <button className="btn-ghost" onClick={handleLogout}>Hi, {user.name} — Logout</button>
             ) : (
@@ -61,6 +100,14 @@ export default function App() {
           </nav>
         </div>
       </header>
+
+      {/* Infinite Scrolling Marquee Banner */}
+      <div className="marquee-banner">
+        <div className="marquee-banner-content">
+          <span>FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • </span>
+          <span>FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • FOOD DIARY • </span>
+        </div>
+      </div>
 
       <main>
         <Home />
@@ -77,6 +124,8 @@ export default function App() {
           <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} onLogin={handleLogin} />
         </React.Suspense>
       )}
+
+      <BackToTop />
     </div>
   )
 }

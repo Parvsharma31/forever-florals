@@ -3,7 +3,11 @@
     "id": "1",
     "title": "Classic Spaghetti Carbonara",
     "description": "Creamy, comforting, and quick to make.",
-    "image": "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "10 min",
+    "cookTime": "15 min",
+    "difficulty": "Easy",
+    "cuisine": "Italian",
     "ingredients": [
       "200g spaghetti",
       "100g pancetta",
@@ -17,7 +21,11 @@
     "id": "2",
     "title": "Avocado Toast with Chili Flakes",
     "description": "A bright, healthy breakfast or snack.",
-    "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "5 min",
+    "cookTime": "5 min",
+    "difficulty": "Easy",
+    "cuisine": "American",
     "ingredients": [
       "2 slices bread",
       "1 ripe avocado",
@@ -31,7 +39,11 @@
     "id": "3",
     "title": "Ramen Noodles",
     "description": "Warm, slurpable noodles in savory broth.",
-    "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.pexels.com/photos/1907228/pexels-photo-1907228.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "10 min",
+    "cookTime": "20 min",
+    "difficulty": "Medium",
+    "cuisine": "Japanese",
     "ingredients": [
       "200g ramen",
       "2 cups broth",
@@ -45,7 +57,11 @@
     "id": "4",
     "title": "Lemon Pancakes",
     "description": "Light pancakes with a bright lemon twist.",
-    "image": "https://images.unsplash.com/photo-1598214886806-c87b84b7078b?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "10 min",
+    "cookTime": "15 min",
+    "difficulty": "Easy",
+    "cuisine": "American",
     "ingredients": [
       "1 cup flour",
       "1 cup milk",
@@ -59,7 +75,11 @@
     "id": "5",
     "title": "Summer Salad",
     "description": "Fresh greens with a zesty dressing.",
-    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+    "image": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "15 min",
+    "cookTime": "0 min",
+    "difficulty": "Easy",
+    "cuisine": "Mediterranean",
     "ingredients": [
       "mixed greens",
       "cherry tomatoes",
@@ -68,5 +88,98 @@
       "lemon"
     ],
     "instructions": "Toss ingredients with olive oil and lemon; season to taste."
+  },
+  {
+    "id": "6",
+    "title": "Classic French Toast",
+    "description": "Golden, crispy breakfast perfection.",
+    "image": "https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "5 min",
+    "cookTime": "10 min",
+    "difficulty": "Easy",
+    "cuisine": "French",
+    "ingredients": [
+      "4 slices bread",
+      "2 eggs",
+      "1/2 cup milk",
+      "1 tsp vanilla",
+      "cinnamon",
+      "butter"
+    ],
+    "instructions": "Whisk eggs, milk, vanilla, and cinnamon. Dip bread and cook in butter until golden. Serve with maple syrup and berries."
+  },
+  {
+    "id": "7",
+    "title": "Eggs Benedict",
+    "description": "Elegant brunch with hollandaise sauce.",
+    "image": "https://images.pexels.com/photos/725991/pexels-photo-725991.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "15 min",
+    "cookTime": "20 min",
+    "difficulty": "Hard",
+    "cuisine": "American",
+    "ingredients": [
+      "2 English muffins",
+      "4 eggs",
+      "4 slices ham",
+      "hollandaise sauce",
+      "paprika"
+    ],
+    "instructions": "Toast muffins; poach eggs; layer with ham and top with hollandaise. Sprinkle with paprika."
+  },
+  {
+    "id": "8",
+    "title": "Berry Smoothie Bowl",
+    "description": "Refreshing and nutrient-packed breakfast.",
+    "image": "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "10 min",
+    "cookTime": "0 min",
+    "difficulty": "Easy",
+    "cuisine": "Healthy",
+    "ingredients": [
+      "1 cup frozen berries",
+      "1 banana",
+      "1/2 cup yogurt",
+      "granola",
+      "fresh fruit toppings"
+    ],
+    "instructions": "Blend berries, banana, and yogurt until smooth. Pour into bowl and top with granola and fresh fruit."
+  },
+  {
+    "id": "9",
+    "title": "Breakfast Burrito",
+    "description": "Hearty morning wrap with scrambled eggs.",
+    "image": "https://images.pexels.com/photos/7218637/pexels-photo-7218637.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "10 min",
+    "cookTime": "15 min",
+    "difficulty": "Medium",
+    "cuisine": "Mexican",
+    "ingredients": [
+      "2 large tortillas",
+      "4 eggs",
+      "1/2 cup cheese",
+      "salsa",
+      "avocado",
+      "black beans"
+    ],
+    "instructions": "Scramble eggs; warm tortilla; fill with eggs, cheese, beans, and avocado. Roll and serve with salsa."
+  },
+  {
+    "id": "10",
+    "title": "Croissant Sandwich",
+    "description": "Buttery croissant with savory fillings.",
+    "image": "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "prepTime": "5 min",
+    "cookTime": "5 min",
+    "difficulty": "Easy",
+    "cuisine": "French",
+    "ingredients": [
+      "2 croissants",
+      "4 slices turkey",
+      "2 slices cheese",
+      "lettuce",
+      "tomato",
+      "mustard"
+    ],
+    "instructions": "Slice croissant; layer with turkey, cheese, lettuce, and tomato. Add mustard and serve."
   }
 ]
