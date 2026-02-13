@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+  <rect width="100%" height="100%" fill="#fff" />
+  <g fill="#a8d08d">
+    <path d="M80 200 C120 150, 280 150, 320 200 L80 200" />
+  </g>
+  <g fill="#7dbf59">
+    <circle cx="150" cy="160" r="14" />
+    <circle cx="210" cy="140" r="12" />
+    <circle cx="260" cy="170" r="10" />
+  </g>
+</svg>
