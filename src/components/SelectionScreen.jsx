@@ -40,9 +40,9 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
             </div>
 
             {/* Grid */}
-            <div className="flex-1 overflow-y-auto px-4 pb-32">
+            <div className="flex-1 overflow-y-auto px-4 pb-32 no-scrollbar">
                 <motion.div
-                    className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto pt-10"
+                    className="flex flex-wrap justify-center gap-4 md:gap-8 max-w-7xl mx-auto pt-4 md:pt-10"
                     initial="hidden"
                     animate="visible"
                     variants={{
@@ -59,14 +59,14 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                     hidden: { opacity: 0, scale: 0.9 },
                                     visible: { opacity: 1, scale: 1 }
                                 }}
-                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                whileHover={{ scale: 1.05, rotate: 2 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => totalCount < maxFlowers && onAddFlower(flower)}
                                 className={`
                   relative cursor-pointer transition-all duration-300 flex items-center justify-center
+                  w-28 h-28 md:w-36 md:h-36
                   ${totalCount >= maxFlowers ? 'opacity-50 cursor-not-allowed grayscale' : ''}
                 `}
-                                style={{ width: '140px', height: '140px' }}
                             >
                                 {/* Selected Indicator (Subtle ring or just scale) */}
                                 {isSelected && (
@@ -116,7 +116,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
             >
-                <div className="flex flex-wrap gap-2 justify-center md:justify-start overflow-x-auto max-w-full md:max-w-3xl no-scrollbar">
+                <div className="flex flex-nowrap md:flex-wrap gap-2 justify-start md:justify-start overflow-x-auto w-full md:max-w-3xl no-scrollbar pb-2 md:pb-0">
                     {groupedSelection.length === 0 ? (
                         <span className="text-gray-400 italic text-sm py-1">Your bouquet is empty...</span>
                     ) : (
@@ -125,7 +125,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                 key={item.id}
                                 layout
                                 onClick={() => onRemoveFlower(item.id)}
-                                className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-red-600 transition-colors group"
+                                className="flex-none flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-red-600 transition-colors group whitespace-nowrap"
                             >
                                 <span> {item.name} ×{item.count}</span>
                                 <span className="opacity-0 group-hover:opacity-100 text-xs">×</span>

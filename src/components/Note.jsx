@@ -14,7 +14,7 @@ const Note = ({ noteData, onUpdateNote, onNext, onBack }) => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-[#FFF0F5] items-center py-12 px-6">
+        <div className="flex flex-col min-h-screen bg-[#FFF0F5] items-center py-6 md:py-12 px-4 md:px-6">
             <motion.div
                 className="w-full max-w-lg"
                 initial={{ opacity: 0, y: 20 }}

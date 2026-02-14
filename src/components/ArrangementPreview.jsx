@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -86,7 +86,7 @@ const BabysBreath = ({ x, y, rotate, scale = 1, flip = false }) => (
         <path d="M0,0 C0,-15 -3,-25 -2,-40" stroke="#7a8a65" strokeWidth="0.8" opacity="0.4" />
         <path d="M0,-20 C8,-28 5,-35 10,-38" stroke="#7a8a65" strokeWidth="0.6" opacity="0.35" />
         <path d="M0,-15 C-6,-22 -8,-30 -10,-34" stroke="#7a8a65" strokeWidth="0.6" opacity="0.35" />
-        {[{cx:-2,cy:-40},{cx:10,cy:-38},{cx:-10,cy:-34},{cx:-5,cy:-44},{cx:5,cy:-42},{cx:0,cy:-48}].map((p, i) => (
+        {[{ cx: -2, cy: -40 }, { cx: 10, cy: -38 }, { cx: -10, cy: -34 }, { cx: -5, cy: -44 }, { cx: 5, cy: -42 }, { cx: 0, cy: -48 }].map((p, i) => (
             <circle key={i} cx={p.cx} cy={p.cy} r={2.5} fill="#fff" opacity="0.85" />
         ))}
     </g>
@@ -362,26 +362,51 @@ const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack,
     const cycleGreenery = () => setGreeneryIdx((i) => (i + 1) % GREENERY_THEMES.length);
 
     // Container dimensions
-    const containerW = 440;
-    const containerH = isFinal ? 480 : 540;
-    const domeCX = containerW / 2;
-    const domeCY = containerH * 0.62;
+    const baseContainerW = 440;
+    const baseContainerH = isFinal ? 480 : 540;
+
+    // Responsive scaling
+    const [scale, setScale] = useState(1);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const padding = 32; // 16px padding on each side
+            const availableWidth = width - padding;
+
+            if (availableWidth < baseContainerW) {
+                setScale(availableWidth / baseContainerW);
+            } else {
+                setScale(1);
+            }
+        };
+
+        handleResize(); // Init
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [baseContainerW]);
+
+    const domeCX = baseContainerW / 2;
+    const domeCY = baseContainerH * 0.62;
 
     const LeafComp = theme.LeafComponent;
 
+    // Calculate dynamic height for the wrapper based on scale
+    const scaledHeight = baseContainerH * scale;
+
     return (
-        <div className={`flex flex-col items-center justify-center ${isFinal ? '' : 'p-6 md:p-12 min-h-screen'}`}>
+        <div className={`flex flex-col items-center justify-center ${isFinal ? '' : 'min-h-screen py-6 md:py-12'}`}>
             {!isFinal && (
                 <>
                     <motion.h2
-                        className="text-3xl md:text-4xl font-serif text-[#4A0E0E] mb-2"
+                        className="text-3xl md:text-4xl font-serif text-[#4A0E0E] mb-2 text-center"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                     >
                         Your Bouquet
                     </motion.h2>
                     <motion.p
-                        className="text-[#880E4F] mb-8 italic"
+                        className="text-[#880E4F] mb-8 italic text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
@@ -391,127 +416,145 @@ const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack,
                 </>
             )}
 
-            {/* ═══ BOUQUET ═══ */}
-            <div className="relative mx-auto" style={{ width: containerW, height: containerH }}>
-
-                {/* ── Stems ── */}
-                <svg
-                    className="absolute inset-0 pointer-events-none"
-                    width={containerW} height={containerH}
-                    viewBox={`0 0 ${containerW} ${containerH}`}
-                    fill="none" style={{ zIndex: 1 }}
+            {/* ═══ BOUQUET WRAPPER ═══ */}
+            <div
+                style={{
+                    width: baseContainerW * scale,
+                    height: scaledHeight,
+                    position: 'relative'
+                }}
+            >
+                {/* Scaled Content */}
+                <div
+                    style={{
+                        width: baseContainerW,
+                        height: baseContainerH,
+                        transform: `scale(${scale})`,
+                        transformOrigin: 'top left',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                    }}
                 >
-                    {[-28, -14, 0, 14, 28].map((offset, i) => (
-                        <path
-                            key={`stem-${i}`}
-                            d={`M${domeCX + offset * 2.2},${domeCY + 5} Q${domeCX + offset * 0.8},${domeCY + 55} ${domeCX + offset * 0.3},${containerH - 10}`}
-                            stroke={theme.stemColor}
-                            strokeWidth={2.5 - Math.abs(offset) * 0.03}
-                            opacity={0.65}
-                            strokeLinecap="round"
-                        />
-                    ))}
-                    <ellipse cx={domeCX} cy={domeCY + 40} rx={18} ry={6} fill={theme.stemColor} opacity="0.45" />
-                </svg>
-
-                {/* ── Leaves + Accents layer ── */}
-                <motion.svg
-                    key={`greenery-${greeneryIdx}`}
-                    className="absolute inset-0 pointer-events-none"
-                    width={containerW} height={containerH}
-                    viewBox={`0 0 ${containerW} ${containerH}`}
-                    fill="none" style={{ zIndex: 2 }}
-                    initial={{ opacity: 0, scale: 0.92 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <g transform={`translate(${domeCX}, ${domeCY})`}>
-                        {/* Leaves */}
-                        {leaves.map((l, i) => (
-                            <LeafComp
-                                key={`leaf-${i}`}
-                                x={l.x} y={l.y}
-                                rotate={l.rot}
-                                scale={l.s}
-                                flip={l.flip}
-                                color={l.color}
+                    {/* ── Stems ── */}
+                    <svg
+                        className="absolute inset-0 pointer-events-none"
+                        width={baseContainerW} height={baseContainerH}
+                        viewBox={`0 0 ${baseContainerW} ${baseContainerH}`}
+                        fill="none" style={{ zIndex: 1 }}
+                    >
+                        {[-28, -14, 0, 14, 28].map((offset, i) => (
+                            <path
+                                key={`stem-${i}`}
+                                d={`M${domeCX + offset * 2.2},${domeCY + 5} Q${domeCX + offset * 0.8},${domeCY + 55} ${domeCX + offset * 0.3},${baseContainerH - 10}`}
+                                stroke={theme.stemColor}
+                                strokeWidth={2.5 - Math.abs(offset) * 0.03}
+                                opacity={0.65}
+                                strokeLinecap="round"
                             />
                         ))}
-                        {/* Lavender sprigs */}
-                        {lavenders.map((l, i) => (
-                            <LavenderSprig key={`lav-${i}`} x={l.x} y={l.y} rotate={l.rot} scale={l.s} flip={l.flip} />
-                        ))}
-                        {/* Baby's breath */}
-                        {babysBreaths.map((b, i) => (
-                            <BabysBreath key={`bb-${i}`} x={b.x} y={b.y} rotate={b.rot} scale={b.s} flip={b.flip} />
-                        ))}
-                        {/* Berries */}
-                        {berries.map((b, i) => (
-                            <Berry key={`berry-${i}`} x={b.x} y={b.y} r={b.r} color={theme.berryColor} />
-                        ))}
-                    </g>
-                </motion.svg>
+                        <ellipse cx={domeCX} cy={domeCY + 40} rx={18} ry={6} fill={theme.stemColor} opacity="0.45" />
+                    </svg>
 
-                {/* ── Flowers ── */}
-                <AnimatePresence>
-                    {arrangement.map((item, index) => {
-                        const sz = item.size || 88;
-                        const imgScale = 1.2;
-                        return (
-                            <motion.div
-                                key={`${item.id}-${index}-${seed}`}
-                                className="absolute"
-                                style={{
-                                    left: domeCX, top: domeCY,
-                                    width: sz, height: sz,
-                                    marginLeft: -sz / 2, marginTop: -sz / 2,
-                                    zIndex: 10 + (item.zIndex || 0),
-                                }}
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{
-                                    opacity: 1, scale: item.scale || 1,
-                                    x: item.x, y: item.y,
-                                    rotate: item.rotation || 0,
-                                }}
-                                transition={{
-                                    duration: 0.6, delay: index * 0.05,
-                                    type: 'spring', stiffness: 140, damping: 16,
-                                }}
-                            >
-                                <div style={{
-                                    width: '100%', height: '100%',
-                                    borderRadius: '50%', overflow: 'hidden',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                }}>
-                                    {item.image ? (
-                                        <img
-                                            src={item.image} alt={item.name} draggable={false}
-                                            style={{
-                                                width: `${imgScale * 100}%`,
-                                                height: `${imgScale * 100}%`,
-                                                objectFit: 'cover',
-                                                filter: 'saturate(1.3) contrast(1.1) brightness(1.02)',
-                                            }}
-                                        />
-                                    ) : (
-                                        item.component && (
-                                            <div style={{ width: '85%', height: '85%' }}>
-                                                <item.component />
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </AnimatePresence>
+                    {/* ── Leaves + Accents layer ── */}
+                    <motion.svg
+                        key={`greenery-${greeneryIdx}`}
+                        className="absolute inset-0 pointer-events-none"
+                        width={baseContainerW} height={baseContainerH}
+                        viewBox={`0 0 ${baseContainerW} ${baseContainerH}`}
+                        fill="none" style={{ zIndex: 2 }}
+                        initial={{ opacity: 0, scale: 0.92 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <g transform={`translate(${domeCX}, ${domeCY})`}>
+                            {/* Leaves */}
+                            {leaves.map((l, i) => (
+                                <LeafComp
+                                    key={`leaf-${i}`}
+                                    x={l.x} y={l.y}
+                                    rotate={l.rot}
+                                    scale={l.s}
+                                    flip={l.flip}
+                                    color={l.color}
+                                />
+                            ))}
+                            {/* Lavender sprigs */}
+                            {lavenders.map((l, i) => (
+                                <LavenderSprig key={`lav-${i}`} x={l.x} y={l.y} rotate={l.rot} scale={l.s} flip={l.flip} />
+                            ))}
+                            {/* Baby's breath */}
+                            {babysBreaths.map((b, i) => (
+                                <BabysBreath key={`bb-${i}`} x={b.x} y={b.y} rotate={b.rot} scale={b.s} flip={b.flip} />
+                            ))}
+                            {/* Berries */}
+                            {berries.map((b, i) => (
+                                <Berry key={`berry-${i}`} x={b.x} y={b.y} r={b.r} color={theme.berryColor} />
+                            ))}
+                        </g>
+                    </motion.svg>
 
-                {/* Brand */}
-                <div
-                    className="absolute left-1/2 -translate-x-1/2 opacity-30 font-serif text-[10px] text-[#880E4F] tracking-widest"
-                    style={{ bottom: -4, zIndex: 40 }}
-                >
-                    Forever Florals
+                    {/* ── Flowers ── */}
+                    <AnimatePresence>
+                        {arrangement.map((item, index) => {
+                            const sz = item.size || 88;
+                            const imgScale = 1.2;
+                            return (
+                                <motion.div
+                                    key={`${item.id}-${index}-${seed}`}
+                                    className="absolute"
+                                    style={{
+                                        left: domeCX, top: domeCY,
+                                        width: sz, height: sz,
+                                        marginLeft: -sz / 2, marginTop: -sz / 2,
+                                        zIndex: 10 + (item.zIndex || 0),
+                                    }}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{
+                                        opacity: 1, scale: item.scale || 1,
+                                        x: item.x, y: item.y,
+                                        rotate: item.rotation || 0,
+                                    }}
+                                    transition={{
+                                        duration: 0.6, delay: index * 0.05,
+                                        type: 'spring', stiffness: 140, damping: 16,
+                                    }}
+                                >
+                                    <div style={{
+                                        width: '100%', height: '100%',
+                                        borderRadius: '50%', overflow: 'hidden',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    }}>
+                                        {item.image ? (
+                                            <img
+                                                src={item.image} alt={item.name} draggable={false}
+                                                style={{
+                                                    width: `${imgScale * 100}%`,
+                                                    height: `${imgScale * 100}%`,
+                                                    objectFit: 'cover',
+                                                    filter: 'saturate(1.3) contrast(1.1) brightness(1.02)',
+                                                }}
+                                            />
+                                        ) : (
+                                            item.component && (
+                                                <div style={{ width: '85%', height: '85%' }}>
+                                                    <item.component />
+                                                </div>
+                                            )
+                                        )}
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </AnimatePresence>
+
+                    {/* Brand */}
+                    <div
+                        className="absolute left-1/2 -translate-x-1/2 opacity-30 font-serif text-[10px] text-[#880E4F] tracking-widest"
+                        style={{ bottom: -4, zIndex: 40 }}
+                    >
+                        Forever Florals
+                    </div>
                 </div>
             </div>
 
