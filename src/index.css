@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Courier+Prime&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-mono: "Courier Prime", monospace;
+  --color-cream: #F5F5DC;
+}
+
+:root {
+  background-color: var(--color-cream);
+  color: #333;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  font-family: 'Courier Prime', monospace;
+  background-color: #FFF0F5;
+  /* Lavender Blush */
+  color: #4A0E0E;
+  /* Deep Burgundy */
+  --color-cream: #FFF0F5;
+  /* Re-mapped to Lavender Blush */
+  --color-black: #4A0E0E;
+  /* Re-mapped to Deep Burgundy */
+  --color-accent: #C2185B;
+  /* Ruby Red */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-cream);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for the vintage feel (minimal) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
