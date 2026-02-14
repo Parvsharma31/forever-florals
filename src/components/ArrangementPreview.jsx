@@ -527,12 +527,15 @@ const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack,
                                     }}>
                                         {item.image ? (
                                             <img
-                                                src={item.image} alt={item.name} draggable={false}
+                                                src={item.image}
+                                                alt={item.name}
+                                                title={item.name}
+                                                draggable={false}
                                                 style={{
                                                     width: `${imgScale * 100}%`,
                                                     height: `${imgScale * 100}%`,
                                                     objectFit: 'cover',
-                                                    filter: 'saturate(1.3) contrast(1.1) brightness(1.02)',
+                                                    // filter: 'saturate(1.3) contrast(1.1) brightness(1.02)',
                                                 }}
                                             />
                                         ) : (

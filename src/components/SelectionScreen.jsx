@@ -63,7 +63,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => totalCount < maxFlowers && onAddFlower(flower)}
                                 className={`
-                  relative cursor-pointer transition-all duration-300 flex items-center justify-center
+                  relative cursor-pointer transition-all duration-300 flex items-center justify-center group overflow-hidden rounded-lg
                   w-28 h-28 md:w-36 md:h-36
                   ${totalCount >= maxFlowers ? 'opacity-50 cursor-not-allowed grayscale' : ''}
                 `}
@@ -91,6 +91,13 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                     )}
                                 </div>
 
+                                {/* Name Overlay on Hover */}
+                                <motion.div
+                                    className="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur-sm py-1 border-t border-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10"
+                                >
+                                    <span className="text-[10px] uppercase tracking-widest font-medium text-[#880E4F]">{flower.name}</span>
+                                </motion.div>
+
                                 {/* Badge - Simplified or Removed based on "just the flowers only" */}
                                 <AnimatePresence>
                                     {count > 0 && (
@@ -98,7 +105,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                             initial={{ scale: 0 }}
                                             animate={{ scale: 1 }}
                                             exit={{ scale: 0 }}
-                                            className="absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center bg-gray-900 text-white rounded-full text-xs font-medium shadow-sm z-10"
+                                            className="absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center bg-gray-900 text-white rounded-full text-xs font-medium shadow-sm z-20"
                                         >
                                             {count}
                                         </motion.div>
