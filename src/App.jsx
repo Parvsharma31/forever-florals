@@ -133,6 +133,9 @@ function App() {
           />
         )}
       </AnimatePresence>
+      <footer className="w-full text-center py-4 text-sm text-[#880E4F] opacity-70 font-sans tracking-wide">
+        Made with care by Parv
+      </footer>
     </div>
   );
 }
