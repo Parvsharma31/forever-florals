@@ -47,9 +47,9 @@ const FinalExport = ({ bouquet, note, isReceived = false }) => {
                     {isReceived ? "A Gift For You" : "Your bouquet is ready."}
                 </h1>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-12 mb-12">
-                    {/* Bouquet Visual */}
-                    <div className="transform scale-90 md:scale-100">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-12">
+                    {/* Bouquet Visual — ArrangementPreview handles its own responsive scaling */}
+                    <div className="w-full flex justify-center">
                         <ArrangementPreview
                             selectedFlowers={bouquet.flowers}
                             selectedGreenery={bouquet.greenery || []}
@@ -59,7 +59,7 @@ const FinalExport = ({ bouquet, note, isReceived = false }) => {
 
                     {/* Note Card */}
                     <motion.div
-                        className="bg-white p-8 shadow-md max-w-sm w-full relative transform rotate-1 border border-pink-100"
+                        className="bg-white p-6 md:p-8 shadow-md max-w-sm w-full relative border border-pink-100 overflow-hidden"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.5 }}

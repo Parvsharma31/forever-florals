@@ -20,12 +20,14 @@ const fillStyle = (color) => ({
 
 // Reusable filter definition
 export const WatercolorFilter = () => (
-    <svg width="0" height="0" className="absolute">
-        <filter id="watercolor">
-            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" />
-            <feGaussianBlur stdDeviation="0.5" />
-        </filter>
+    <svg width="0" height="0" style={{ position: 'absolute', overflow: 'hidden' }} aria-hidden="true">
+        <defs>
+            <filter id="watercolor">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" />
+                <feGaussianBlur stdDeviation="0.5" />
+            </filter>
+        </defs>
     </svg>
 );
 

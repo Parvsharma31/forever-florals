@@ -13,8 +13,9 @@ const PreviewPage = ({ bouquet, note, onEditFlowers, onEditNote, onNext }) => {
                 <div className="mb-4 md:mb-8">
                     <ArrangementPreview
                         selectedFlowers={bouquet.flowers}
-                        selectedGreenery={[]} // No greenery for simplified MVP
+                        selectedGreenery={[]}
                         isFinal={true}
+                        showControls={true}
                     />
                 </div>
 

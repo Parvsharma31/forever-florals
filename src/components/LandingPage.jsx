@@ -4,7 +4,7 @@ import { Flower } from 'lucide-react';
 
 const LandingPage = ({ onStart, onViewSample }) => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen text-center p-6 bg-[#FFF0F5]">
+        <div className="flex flex-col items-center justify-center min-h-screen text-center p-6 pb-16 bg-[#FFF0F5]">
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -53,7 +53,7 @@ const LandingPage = ({ onStart, onViewSample }) => {
             </motion.div>
 
             <motion.div
-                className="absolute bottom-8 text-sm text-[#880E4F] font-serif italic"
+                className="mt-8 text-sm text-[#880E4F] font-serif italic"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}

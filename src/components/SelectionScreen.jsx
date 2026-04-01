@@ -18,7 +18,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
     }, {}));
 
     return (
-        <div className="flex flex-col h-screen bg-[#F5F5DC] overflow-hidden">
+        <div className="flex flex-col bg-[#F5F5DC]" style={{ height: '100dvh', overflow: 'hidden' }}>
             <WatercolorFilter />
             {/* Header */}
             <div className="text-center pt-8 pb-4 px-4 flex-none z-10 bg-[#F5F5DC]">
@@ -40,7 +40,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
             </div>
 
             {/* Grid */}
-            <div className="flex-1 overflow-y-auto px-4 pb-32 no-scrollbar">
+            <div className="flex-1 overflow-y-auto px-4 pb-36 md:pb-28 no-scrollbar">
                 <motion.div
                     className="flex flex-wrap justify-center gap-4 md:gap-8 max-w-7xl mx-auto pt-4 md:pt-10"
                     initial="hidden"
@@ -59,13 +59,13 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                     hidden: { opacity: 0, scale: 0.9 },
                                     visible: { opacity: 1, scale: 1 }
                                 }}
-                                whileHover={{ scale: 1.05, rotate: 2 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileTap={{ scale: 0.93 }}
                                 onClick={() => totalCount < maxFlowers && onAddFlower(flower)}
+                                style={{ touchAction: 'manipulation' }}
                                 className={`
                   relative cursor-pointer transition-all duration-300 flex items-center justify-center group overflow-hidden rounded-lg
                   w-28 h-28 md:w-36 md:h-36
-                  ${totalCount >= maxFlowers ? 'opacity-50 cursor-not-allowed grayscale' : ''}
+                  ${totalCount >= maxFlowers && count === 0 ? 'opacity-40 cursor-not-allowed grayscale' : ''}
                 `}
                             >
                                 {/* Selected Indicator (Subtle ring or just scale) */}
@@ -119,47 +119,55 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
 
             {/* Bottom Bar */}
             <motion.div
-                className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20"
+                className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 pt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20"
+                style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))' }}
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
             >
-                <div className="flex flex-nowrap md:flex-wrap gap-2 justify-start md:justify-start overflow-x-auto w-full md:max-w-3xl no-scrollbar pb-2 md:pb-0">
-                    {groupedSelection.length === 0 ? (
-                        <span className="text-gray-400 italic text-sm py-1">Your bouquet is empty...</span>
-                    ) : (
-                        groupedSelection.map((item) => (
-                            <motion.button
-                                key={item.id}
-                                layout
-                                onClick={() => onRemoveFlower(item.id)}
-                                className="flex-none flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-red-600 transition-colors group whitespace-nowrap"
-                            >
-                                <span> {item.name} ×{item.count}</span>
-                                <span className="opacity-0 group-hover:opacity-100 text-xs">×</span>
-                            </motion.button>
-                        ))
-                    )}
-                </div>
-
-                <div className="flex items-center gap-4">
+                {/* Count + NEXT — on mobile this row is first so it's always visible */}
+                <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto md:order-last">
                     <div className="text-sm text-gray-500 font-medium">
                         <span className={`${totalCount < minFlowers ? 'text-gray-400' : 'text-gray-900'}`}>{totalCount}</span>
                         <span className="mx-1">/</span>
                         <span>{maxFlowers}</span>
+                        {totalCount < minFlowers && (
+                            <span className="ml-2 text-xs text-gray-400">({minFlowers - totalCount} more)</span>
+                        )}
                     </div>
 
                     <button
+                        type="button"
                         onClick={onNext}
                         disabled={totalCount < minFlowers}
+                        style={{ position: 'relative', zIndex: 30 }}
                         className={`
-              px-8 py-3 rounded-sm text-sm font-medium tracking-widest transition-all duration-300
-              ${totalCount >= minFlowers
+                            px-8 py-2.5 rounded-sm text-sm font-medium tracking-widest transition-all duration-300
+                            ${totalCount >= minFlowers
                                 ? 'bg-gray-900 text-white hover:bg-gray-800 shadow-md'
                                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'}
-            `}
+                        `}
                     >
                         NEXT
                     </button>
+                </div>
+
+                {/* Chips — horizontally scrollable, always single row, no layout animation (prevents ghost clicks) */}
+                <div className="flex flex-nowrap gap-2 overflow-x-auto w-full md:max-w-3xl no-scrollbar pb-1 md:pb-0">
+                    {groupedSelection.length === 0 ? (
+                        <span className="text-gray-400 italic text-sm py-1 whitespace-nowrap">Your bouquet is empty...</span>
+                    ) : (
+                        groupedSelection.map((item) => (
+                            <button
+                                key={item.id}
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); onRemoveFlower(item.id); }}
+                                className="flex-none flex items-center gap-1.5 px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-red-600 active:bg-red-50 active:text-red-600 transition-colors whitespace-nowrap"
+                            >
+                                <span>{item.name} ×{item.count}</span>
+                                <span className="text-xs opacity-50">✕</span>
+                            </button>
+                        ))
+                    )}
                 </div>
             </motion.div>
         </div>

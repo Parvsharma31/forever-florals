@@ -50,7 +50,7 @@ export const flowers = [
     id: 'tulip',
     name: 'Tulip',
     meaning: 'Deep Love',
-    birthMonth: 'Total',
+    birthMonth: 'April',
     color: '#FF69B4',
     component: TulipPink,
     image: '/flowers/tulip.png'
@@ -59,7 +59,7 @@ export const flowers = [
     id: 'zinnia',
     name: 'Zinnia',
     meaning: 'Lasting Affection',
-    birthMonth: 'null',
+    birthMonth: 'September',
     color: '#E6E6FA',
     component: Daffodil, // Fallback
     image: '/flowers/zinnia.png'
@@ -77,7 +77,7 @@ export const flowers = [
     id: 'orchid',
     name: 'Orchid',
     meaning: 'Beauty and Strength',
-    birthMonth: 'null',
+    birthMonth: 'February',
     color: '#DA70D6',
     component: Violet,
     image: '/flowers/orchid.png'

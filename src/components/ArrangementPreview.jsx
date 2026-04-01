@@ -211,7 +211,7 @@ const GREENERY_THEMES = [
 /* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT
    ═══════════════════════════════════════════════════════════════ */
-const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack, isFinal = false }) => {
+const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack, isFinal = false, showControls = false }) => {
     const [seed, setSeed] = useState(0);
     const [greeneryIdx, setGreeneryIdx] = useState(0);
 
@@ -508,6 +508,7 @@ const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack,
                                         width: sz, height: sz,
                                         marginLeft: -sz / 2, marginTop: -sz / 2,
                                         zIndex: 10 + (item.zIndex || 0),
+                                        willChange: 'transform',
                                     }}
                                     initial={{ opacity: 0, scale: 0 }}
                                     animate={{
@@ -516,8 +517,8 @@ const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack,
                                         rotate: item.rotation || 0,
                                     }}
                                     transition={{
-                                        duration: 0.6, delay: index * 0.05,
-                                        type: 'spring', stiffness: 140, damping: 16,
+                                        duration: 0.5, delay: index * 0.04,
+                                        type: 'spring', stiffness: 80, damping: 20,
                                     }}
                                 >
                                     <div style={{
@@ -561,26 +562,28 @@ const ArrangementPreview = ({ selectedFlowers, selectedGreenery, onNext, onBack,
                 </div>
             </div>
 
-            {/* ── Shuffle / Greenery controls (always visible) ── */}
-            <div className="flex flex-col gap-3 items-center mt-5">
-                <p className="text-xs text-[#880E4F] opacity-60 tracking-wider uppercase">
-                    Greenery: {theme.name}
-                </p>
-                <div className="flex gap-3">
-                    <button
-                        onClick={shuffleArrangement}
-                        className="px-5 py-2 text-sm rounded-full border border-[#880E4F] text-[#880E4F] hover:bg-pink-100 transition-colors tracking-wide"
-                    >
-                        SHUFFLE
-                    </button>
-                    <button
-                        onClick={cycleGreenery}
-                        className="px-5 py-2 text-sm rounded-full border border-[#2E7D32] text-[#2E7D32] hover:bg-green-50 transition-colors tracking-wide"
-                    >
-                        CHANGE GREENERY
-                    </button>
+            {/* ── Shuffle / Greenery controls ── */}
+            {(!isFinal || showControls) && (
+                <div className="flex flex-col gap-3 items-center mt-5">
+                    <p className="text-xs text-[#880E4F] opacity-60 tracking-wider uppercase">
+                        Greenery: {theme.name}
+                    </p>
+                    <div className="flex gap-3">
+                        <button
+                            onClick={shuffleArrangement}
+                            className="px-5 py-2 text-sm rounded-full border border-[#880E4F] text-[#880E4F] hover:bg-pink-100 transition-colors tracking-wide"
+                        >
+                            SHUFFLE
+                        </button>
+                        <button
+                            onClick={cycleGreenery}
+                            className="px-5 py-2 text-sm rounded-full border border-[#2E7D32] text-[#2E7D32] hover:bg-green-50 transition-colors tracking-wide"
+                        >
+                            CHANGE GREENERY
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* ── Navigation (only on arrangement step) ── */}
             {!isFinal && (
