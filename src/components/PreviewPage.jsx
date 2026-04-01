@@ -4,7 +4,7 @@ import ArrangementPreview from './ArrangementPreview';
 
 const PreviewPage = ({ bouquet, note, onEditFlowers, onEditNote, onNext }) => {
     return (
-        <div className="flex flex-col min-h-screen bg-[#FFF0F5] items-center py-6 md:py-12 px-4 md:px-6">
+        <div className="flex flex-col min-h-screen bg-[#FFF0F5] items-center pt-16 pb-6 md:pt-20 md:pb-12 px-4 md:px-6">
             <motion.div
                 className="w-full max-w-2xl text-center"
                 initial={{ opacity: 0 }}
@@ -20,7 +20,7 @@ const PreviewPage = ({ bouquet, note, onEditFlowers, onEditNote, onNext }) => {
                 </div>
 
                 {/* Card */}
-                <div className="bg-white p-6 md:p-10 shadow-lg max-w-md mx-auto relative mb-6">
+                <div className="bg-white p-4 md:p-8 shadow-lg max-w-md mx-auto relative mb-6">
                     <div className="mb-6">
                         <span className="text-xs font-bold text-[#880E4F] uppercase tracking-widest">To</span>
                         <h3 className="text-xl font-serif text-[#4A0E0E] mt-1">{note.to}</h3>
@@ -38,6 +38,7 @@ const PreviewPage = ({ bouquet, note, onEditFlowers, onEditNote, onNext }) => {
                 {/* Actions */}
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4">
                     <button
+                        type="button"
                         onClick={onEditFlowers}
                         className="px-6 py-3 border border-[#C2185B] text-[#C2185B] rounded-sm hover:border-[#880E4F] hover:text-[#880E4F] transition-colors w-full md:w-auto text-sm tracking-wide"
                     >
@@ -45,6 +46,7 @@ const PreviewPage = ({ bouquet, note, onEditFlowers, onEditNote, onNext }) => {
                     </button>
 
                     <button
+                        type="button"
                         onClick={onEditNote}
                         className="px-6 py-3 border border-[#C2185B] text-[#C2185B] rounded-sm hover:border-[#880E4F] hover:text-[#880E4F] transition-colors w-full md:w-auto text-sm tracking-wide"
                     >
@@ -52,6 +54,7 @@ const PreviewPage = ({ bouquet, note, onEditFlowers, onEditNote, onNext }) => {
                     </button>
 
                     <button
+                        type="button"
                         onClick={onNext}
                         className="px-10 py-3 bg-[#C2185B] text-white rounded-sm hover:bg-[#880E4F] transition-colors w-full md:w-auto text-sm font-medium tracking-widest shadow-md"
                     >

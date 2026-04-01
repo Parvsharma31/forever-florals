@@ -1,201 +1,143 @@
-# 🌸 Forever Florals - Online Bouquet Builder
+# Forever Florals - Online Bouquet Builder
 
 A beautiful, interactive web application that lets you create personalized digital bouquets and share them with loved ones. Built with React, Vite, and Tailwind CSS.
 
-## ✨ Features
+## Features
 
-- **Interactive Bouquet Builder**: Select 6-10 beautiful blooms to create your custom bouquet
-- **Personalized Notes**: Add heartfelt messages to accompany your bouquet
-- **Live Preview**: See your bouquet and note before sharing
-- **Easy Sharing**: Generate shareable links to send your digital bouquet to anyone
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Smooth Animations**: Powered by Framer Motion for delightful user experience
+- **Interactive Bouquet Builder**: Select up to 10 blooms to create your custom arrangement
+- **7 Greenery Themes**: Cycle through Classic, Tropical, Eucalyptus, Meadow, Fern Garden, Olive Branch, and Romantic foliage styles
+- **Shuffle Arrangement**: Randomize the flower layout to find the perfect look
+- **Personalized Notes**: Add a heartfelt message with the recipient's name
+- **Live Preview**: See your bouquet and note exactly as the recipient will before sharing
+- **Shareable Links**: Generate a URL-encoded link — anyone who opens it sees your bouquet
+- **Session Persistence**: Your progress is saved so refreshing the page doesn't lose your work
+- **Mobile Responsive**: Fully optimized for touch devices with no tap delay or layout issues
+- **Smooth Animations**: Powered by Framer Motion
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-Before you begin, ensure you have the following installed on your system:
-- **Node.js** (version 16.0 or higher)
-- **npm** (comes with Node.js)
+- **Node.js** v16 or higher
+- **npm** (included with Node.js)
 
-To check if you have Node.js and npm installed, run:
 ```bash
 node --version
 npm --version
 ```
 
-If you don't have Node.js installed, download it from [nodejs.org](https://nodejs.org/).
+Download Node.js from [nodejs.org](https://nodejs.org/) if needed.
 
 ### Installation
 
-1. **Navigate to the project directory**
-   ```bash
-   cd "c:\Users\parvs\OneDrive\Desktop\coding\online bouquet"
-   ```
+```bash
+npm install
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-   This will install all required packages including React, Vite, Tailwind CSS, Framer Motion, and other dependencies.
+### Running the App
 
-### Running the Application
-
-#### Development Mode
-
-To run the application in development mode with hot module replacement (HMR):
-
+**Development** (with hot reload):
 ```bash
 npm run dev
 ```
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-This will start the development server. You should see output similar to:
-```
-VITE v7.3.1  ready in XXX ms
-
-➜  Local:   http://localhost:5173/
-➜  Network: use --host to expose
-```
-
-Open your browser and navigate to `http://localhost:5173/` to view the application.
-
-The application will automatically reload when you make changes to the source code.
-
-#### Production Build
-
-To create an optimized production build:
-
+**Production build:**
 ```bash
 npm run build
 ```
 
-This will generate a `dist` folder with optimized static files ready for deployment.
-
-#### Preview Production Build
-
-To preview the production build locally:
-
+**Preview production build locally:**
 ```bash
 npm run preview
 ```
 
-This will serve the production build on a local server.
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 online bouquet/
-├── public/              # Static assets
+├── public/
 ├── src/
-│   ├── components/      # React components
-│   │   ├── LandingPage.jsx       # Landing page with start options
-│   │   ├── SelectionScreen.jsx   # Flower selection interface
-│   │   ├── Note.jsx              # Note writing interface
-│   │   ├── PreviewPage.jsx       # Preview before sharing
-│   │   ├── FinalExport.jsx       # Share page with link generation
-│   │   └── ...                   # Other UI components
-│   ├── data/            # Application data (flower definitions)
-│   ├── hooks/           # Custom React hooks
-│   ├── lib/             # Utility functions
-│   ├── assets/          # Images and other assets
-│   ├── App.jsx          # Main application component
-│   ├── main.jsx         # Application entry point
-│   └── index.css        # Global styles
-├── index.html           # HTML template
-├── package.json         # Project dependencies and scripts
-├── vite.config.js       # Vite configuration
-└── README.md            # This file
+│   ├── components/
+│   │   ├── LandingPage.jsx        # Landing page
+│   │   ├── SelectionScreen.jsx    # Flower picker with live mini-preview
+│   │   ├── Note.jsx               # Note writing step
+│   │   ├── PreviewPage.jsx        # Full preview before sharing
+│   │   ├── FinalExport.jsx        # Share page with copyable link
+│   │   └── ArrangementPreview.jsx # SVG bouquet renderer + greenery themes
+│   ├── data/
+│   │   └── flowers.jsx            # Flower definitions (id, name, SVG component)
+│   ├── App.jsx                    # App shell, routing, sessionStorage persistence
+│   ├── main.jsx
+│   └── index.css                  # Global styles, touch-action, dvh support
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
 ```
 
-## 🎨 How to Use
+## How to Use
 
-1. **Landing Page**: Click "Create Your Bouquet" to start building
-2. **Select Flowers**: Choose 6-10 blooms from the available options
-3. **Write a Note**: Add a personal message with recipient name
-4. **Preview**: Review your bouquet and note
-5. **Share**: Generate a shareable link and send it to your loved one
+1. **Landing Page** — Click "Create Your Bouquet" or view a sample
+2. **Pick Flowers** — Tap up to 10 blooms; tap again to remove; use the mini-preview to see the arrangement take shape
+3. **Write a Note** — Fill in the recipient's name and a short message (up to 200 characters); use prompt suggestions if you need inspiration
+4. **Preview** — See the final bouquet; shuffle the layout or switch greenery themes; go back to edit if needed
+5. **Share** — Copy the generated link and send it — the recipient opens it and sees your bouquet
 
-## 🛠️ Available Scripts
+## Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start development server with HMR |
+| `npm run dev` | Start development server |
 | `npm run build` | Create production build |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint to check code quality |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
 
-## 🧰 Technologies Used
+## Technologies
 
-- **React 19** - UI library
-- **Vite** - Build tool and development server
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **Lucide React** - Icon library
-- **clsx & tailwind-merge** - Utility for conditional class names
+- **React 19** — UI library
+- **Vite** — Build tool
+- **Tailwind CSS 4** — Utility-first styling
+- **Framer Motion** — Animations
+- **Lucide React** — Icons
 
-## 🌐 Deployment
-
-This application can be deployed to various platforms:
+## Deployment
 
 ### Vercel (Recommended)
-1. Push your code to GitHub
-2. Import the repository in [Vercel](https://vercel.com)
-3. Vercel will auto-detect Vite and deploy
+1. Push to GitHub
+2. Import the repo at [vercel.com](https://vercel.com) — Vite is auto-detected
 
 ### Netlify
 1. Run `npm run build`
-2. Deploy the `dist` folder to [Netlify](https://netlify.com)
+2. Drop the `dist/` folder into [netlify.com](https://netlify.com)
 
 ### GitHub Pages
-1. Install `gh-pages`: `npm install --save-dev gh-pages`
-2. Add to `package.json`:
-   ```json
-   "homepage": "https://yourusername.github.io/online-bouquet",
-   "scripts": {
-     "predeploy": "npm run build",
-     "deploy": "gh-pages -d dist"
-   }
-   ```
-3. Run `npm run deploy`
+```bash
+npm install --save-dev gh-pages
+```
+Add to `package.json`:
+```json
+"homepage": "https://yourusername.github.io/online-bouquet",
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+```
+Then run `npm run deploy`.
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
-### Port Already in Use
-If port 5173 is already in use, Vite will automatically try the next available port. You can also specify a custom port:
+**Port in use:** Vite will try the next available port automatically, or run:
 ```bash
 npm run dev -- --port 3000
 ```
 
-### Dependencies Issues
-If you encounter dependency issues, try:
+**Dependency issues:**
 ```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-### Build Errors
-Clear the cache and rebuild:
-```bash
-npm run build -- --force
-```
-
-## 📝 License
-
-This project is private and not licensed for public use.
-
-## 🤝 Contributing
-
-This is a personal project. If you'd like to suggest improvements, feel free to reach out!
-
-## 💡 Future Enhancements
-
-- Add more flower varieties
-- Implement different bouquet arrangements
-- Add background music options
-- Create downloadable image versions
-- Add seasonal themes
-
 ---
 
-Made with 💐 and ❤️
+Made with care by Parv

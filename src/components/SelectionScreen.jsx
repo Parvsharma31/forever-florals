@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { flowers } from '../data/flowers.jsx';
 import { WatercolorFilter } from '../components/flower-assets/FlowerAssets.jsx';
 
-const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext }) => {
+const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext, onBack }) => {
     const minFlowers = 6;
     const maxFlowers = 10;
 
@@ -20,8 +20,18 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
     return (
         <div className="flex flex-col bg-[#F5F5DC]" style={{ height: '100dvh', overflow: 'hidden' }}>
             <WatercolorFilter />
+            {/* Back to landing */}
+            <button
+                type="button"
+                onClick={onBack}
+                className="fixed top-2 left-3 z-50 text-[#880E4F] opacity-50 hover:opacity-100 transition-opacity text-xl leading-none p-1"
+                aria-label="Back to home"
+            >
+                ←
+            </button>
+
             {/* Header */}
-            <div className="text-center pt-8 pb-4 px-4 flex-none z-10 bg-[#F5F5DC]">
+            <div className="text-center pt-16 pb-4 px-4 flex-none z-10 bg-[#F5F5DC]">
                 <motion.h2
                     className="text-3xl md:text-4xl font-serif text-gray-900 mb-2"
                     initial={{ opacity: 0, y: -10 }}
@@ -40,7 +50,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
             </div>
 
             {/* Grid */}
-            <div className="flex-1 overflow-y-auto px-4 pb-36 md:pb-28 no-scrollbar">
+            <div className="flex-1 overflow-y-auto px-4 pb-28 md:pb-24 no-scrollbar">
                 <motion.div
                     className="flex flex-wrap justify-center gap-4 md:gap-8 max-w-7xl mx-auto pt-4 md:pt-10"
                     initial="hidden"
@@ -64,14 +74,14 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                 style={{ touchAction: 'manipulation' }}
                                 className={`
                   relative cursor-pointer transition-all duration-300 flex items-center justify-center group overflow-hidden rounded-lg
-                  w-28 h-28 md:w-36 md:h-36
+                  w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36
                   ${totalCount >= maxFlowers && count === 0 ? 'opacity-40 cursor-not-allowed grayscale' : ''}
                 `}
                             >
                                 {/* Selected Indicator (Subtle ring or just scale) */}
                                 {isSelected && (
                                     <motion.div
-                                        layoutId="selected-ring"
+                                        layoutId={`selected-ring-${flower.id}`}
                                         className="absolute inset-0 rounded-full border-2 border-gray-800 opacity-20"
                                         initial={{ scale: 0.8, opacity: 0 }}
                                         animate={{ scale: 1.2, opacity: 0.2 }}
@@ -92,11 +102,9 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                 </div>
 
                                 {/* Name Overlay on Hover */}
-                                <motion.div
-                                    className="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur-sm py-1 border-t border-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10"
-                                >
+                                <div className="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur-sm py-1 border-t border-pink-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
                                     <span className="text-[10px] uppercase tracking-widest font-medium text-[#880E4F]">{flower.name}</span>
-                                </motion.div>
+                                </div>
 
                                 {/* Badge - Simplified or Removed based on "just the flowers only" */}
                                 <AnimatePresence>
@@ -118,11 +126,9 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
             </div>
 
             {/* Bottom Bar */}
-            <motion.div
-                className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 pt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20"
+            <div
+                className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 px-4 pt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-30"
                 style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))' }}
-                initial={{ y: 100 }}
-                animate={{ y: 0 }}
             >
                 {/* Count + NEXT — on mobile this row is first so it's always visible */}
                 <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto md:order-last">
@@ -161,7 +167,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                                 key={item.id}
                                 type="button"
                                 onClick={(e) => { e.stopPropagation(); onRemoveFlower(item.id); }}
-                                className="flex-none flex items-center gap-1.5 px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-red-600 active:bg-red-50 active:text-red-600 transition-colors whitespace-nowrap"
+                                className="flex-none flex items-center gap-1.5 px-3 py-2 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-red-600 active:bg-red-50 active:text-red-600 transition-colors whitespace-nowrap"
                             >
                                 <span>{item.name} ×{item.count}</span>
                                 <span className="text-xs opacity-50">✕</span>
@@ -169,7 +175,7 @@ const SelectionScreen = ({ selectedFlowers, onAddFlower, onRemoveFlower, onNext 
                         ))
                     )}
                 </div>
-            </motion.div>
+            </div>
         </div>
     );
 };

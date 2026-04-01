@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Note = ({ noteData, onUpdateNote, onNext, onBack }) => {
-    // Emotional prompts
     const prompts = [
         "Thank you for always being there for me.",
         "I'm proud of you because...",
@@ -10,11 +9,15 @@ const Note = ({ noteData, onUpdateNote, onNext, onBack }) => {
     ];
 
     const handlePromptClick = (text) => {
-        onUpdateNote('message', text + " ");
+        const current = noteData.message.trimEnd();
+        const joined = current ? current + ' ' + text + ' ' : text + ' ';
+        if (joined.length <= 200) onUpdateNote('message', joined);
     };
 
+    const isValid = noteData.to.trim().length > 0 && noteData.message.trim().length > 0;
+
     return (
-        <div className="flex flex-col min-h-screen bg-[#FFF0F5] items-center py-6 md:py-12 px-4 md:px-6">
+        <div className="flex flex-col min-h-screen bg-[#FFF0F5] items-center pt-16 pb-6 md:pt-20 md:pb-12 px-4 md:px-6">
             <motion.div
                 className="w-full max-w-lg"
                 initial={{ opacity: 0, y: 20 }}
@@ -64,6 +67,7 @@ const Note = ({ noteData, onUpdateNote, onNext, onBack }) => {
                         {prompts.map((prompt, i) => (
                             <button
                                 key={i}
+                                type="button"
                                 onClick={() => handlePromptClick(prompt)}
                                 className="text-left px-4 py-3 bg-white/60 border border-transparent hover:border-pink-300 hover:bg-white text-[#4A0E0E] text-sm transition-all rounded-sm"
                             >
@@ -81,18 +85,20 @@ const Note = ({ noteData, onUpdateNote, onNext, onBack }) => {
                 </div>
 
                 {/* Navigation */}
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col-reverse md:flex-row md:justify-between items-center gap-3">
                     <button
+                        type="button"
                         onClick={onBack}
-                        className="text-[#880E4F] hover:text-[#4A0E0E] px-6 py-2 transition-colors font-medium text-sm tracking-wide"
+                        className="w-full md:w-auto text-center text-[#880E4F] hover:text-[#4A0E0E] px-6 py-3 transition-colors font-medium text-sm tracking-wide border border-transparent hover:border-pink-200 rounded-sm"
                     >
                         BACK
                     </button>
 
                     <button
+                        type="button"
                         onClick={onNext}
-                        disabled={!noteData.to || !noteData.message}
-                        className={`px-8 py-3 rounded-sm text-sm font-medium tracking-widest transition-all duration-300 ${(!noteData.to || !noteData.message) ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#C2185B] text-white hover:bg-[#880E4F]'}`}
+                        disabled={!isValid}
+                        className={`w-full md:w-auto px-8 py-3 rounded-sm text-sm font-medium tracking-widest transition-all duration-300 ${!isValid ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#C2185B] text-white hover:bg-[#880E4F]'}`}
                     >
                         NEXT
                     </button>

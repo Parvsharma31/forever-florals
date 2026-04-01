@@ -5,35 +5,61 @@ import { flowers } from '../data/flowers.jsx';
 
 const FinalExport = ({ bouquet, note, isReceived = false }) => {
     const [shareUrl, setShareUrl] = useState('');
-    const [copySuccess, setCopySuccess] = useState(false);
+    const [copyStatus, setCopyStatus] = useState('idle'); // 'idle' | 'success' | 'error'
 
     useEffect(() => {
         if (!isReceived) {
-            // Generate share URL
             const data = {
                 f: bouquet.flowers.map(f => f.id),
-                // No greenery in MVP
                 g: [],
                 n: note
             };
-
             const encoded = btoa(JSON.stringify(data));
-            // Using /b/abc123 format simulation if we were full stack, 
-            // but for frontend-only we keep query param ?data=...
             const url = `${window.location.origin}${window.location.pathname}?data=${encoded}`;
             setShareUrl(url);
         }
     }, [bouquet, note, isReceived]);
 
     const copyToClipboard = async () => {
+        // Modern clipboard API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+                await navigator.clipboard.writeText(shareUrl);
+                setCopyStatus('success');
+                setTimeout(() => setCopyStatus('idle'), 2000);
+                return;
+            } catch (err) {
+                // Fall through to legacy method
+            }
+        }
+        // Legacy fallback for mobile browsers / private mode
         try {
-            await navigator.clipboard.writeText(shareUrl);
-            setCopySuccess(true);
-            setTimeout(() => setCopySuccess(false), 2000);
+            const input = document.createElement('input');
+            input.value = shareUrl;
+            input.style.position = 'fixed';
+            input.style.opacity = '0';
+            document.body.appendChild(input);
+            input.focus();
+            input.select();
+            const ok = document.execCommand('copy');
+            document.body.removeChild(input);
+            if (ok) {
+                setCopyStatus('success');
+                setTimeout(() => setCopyStatus('idle'), 2000);
+            } else {
+                setCopyStatus('error');
+                setTimeout(() => setCopyStatus('idle'), 3000);
+            }
         } catch (err) {
-            console.error('Failed to copy!', err);
+            setCopyStatus('error');
+            setTimeout(() => setCopyStatus('idle'), 3000);
         }
     };
+
+    const copyLabel = copyStatus === 'success' ? 'Copied!' : copyStatus === 'error' ? 'Copy manually ↑' : 'Copy Link';
+    const copyClass = copyStatus === 'error'
+        ? 'bg-red-500 text-white'
+        : 'bg-[#C2185B] text-white hover:bg-[#880E4F]';
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-[#FFF0F5]">
@@ -43,12 +69,12 @@ const FinalExport = ({ bouquet, note, isReceived = false }) => {
                 transition={{ duration: 0.8 }}
                 className="text-center w-full max-w-4xl"
             >
-                <h1 className="text-4xl md:text-5xl font-serif text-[#4A0E0E] mb-8 tracking-tight">
+                <h1 className="text-3xl md:text-5xl font-serif text-[#4A0E0E] mb-6 md:mb-8 tracking-tight px-2">
                     {isReceived ? "A Gift For You" : "Your bouquet is ready."}
                 </h1>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-12">
-                    {/* Bouquet Visual — ArrangementPreview handles its own responsive scaling */}
+                <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 mb-8 md:mb-12">
+                    {/* Bouquet Visual */}
                     <div className="w-full flex justify-center">
                         <ArrangementPreview
                             selectedFlowers={bouquet.flowers}
@@ -88,23 +114,31 @@ const FinalExport = ({ bouquet, note, isReceived = false }) => {
                             <input
                                 readOnly
                                 value={shareUrl}
-                                className="flex-1 px-3 py-2 text-[#4A0E0E] text-sm font-mono truncate outline-none"
+                                className="flex-1 px-3 py-3 md:py-2 text-[#4A0E0E] text-sm font-mono truncate outline-none"
                             />
                             <button
+                                type="button"
                                 onClick={copyToClipboard}
-                                className="px-6 py-2 bg-[#C2185B] text-white text-sm font-medium tracking-wide rounded-sm hover:bg-[#880E4F] transition-colors"
+                                className={`flex-shrink-0 px-5 py-3 md:py-2 text-sm font-medium tracking-wide rounded-sm transition-colors ${copyClass}`}
                             >
-                                {copySuccess ? "Copied" : "Copy Link"}
+                                {copyLabel}
                             </button>
                         </div>
+
+                        {copyStatus === 'error' && (
+                            <p className="text-sm text-red-500 mb-2 px-2 text-center">
+                                Couldn't copy automatically — please select the link above and copy it manually.
+                            </p>
+                        )}
 
                         <p className="text-sm text-[#880E4F] italic font-serif">
                             Anyone with this link can open your bouquet.
                         </p>
 
                         <button
-                            onClick={() => window.location.href = window.location.pathname}
-                            className="mt-12 text-sm text-[#880E4F] hover:text-[#4A0E0E] underline decoration-dotted transition-colors"
+                            type="button"
+                            onClick={() => { sessionStorage.clear(); window.location.href = window.location.pathname; }}
+                            className="mt-10 px-6 py-3 text-sm text-[#880E4F] hover:text-[#4A0E0E] underline decoration-dotted transition-colors"
                         >
                             Start Over
                         </button>

@@ -38,6 +38,7 @@ const LandingPage = ({ onStart, onViewSample }) => {
                 transition={{ delay: 0.6, duration: 0.8 }}
             >
                 <button
+                    type="button"
                     onClick={onStart}
                     className="w-full md:w-auto px-8 py-3 md:px-10 md:py-4 bg-[#C2185B] text-white text-base md:text-lg font-medium tracking-wider hover:bg-[#880E4F] transition-all duration-300 rounded-sm shadow-sm hover:shadow-md"
                 >
@@ -45,6 +46,7 @@ const LandingPage = ({ onStart, onViewSample }) => {
                 </button>
 
                 <button
+                    type="button"
                     onClick={onViewSample}
                     className="w-full md:w-auto px-8 py-3 md:px-10 md:py-4 border border-[#C2185B] text-[#C2185B] text-base md:text-lg font-medium tracking-wider hover:border-[#880E4F] hover:text-[#880E4F] transition-all duration-300 rounded-sm"
                 >
